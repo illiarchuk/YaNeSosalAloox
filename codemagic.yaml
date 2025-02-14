@@ -2,14 +2,19 @@ workflows:
   ios:
     name: iOS build
     steps:
-      - name: Installing .NET workloads
-        run: |
-          dotnet workload install maui-ios
-          dotnet workload install maui-tizen
-          dotnet workload restore
-      - name: Restoring dependencies
-        run: dotnet restore YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj
-      - name: Building iOS project
-        run: dotnet build YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj --configuration Release
+      - name: Установка .NET рабочих нагрузок
+        script:
+          - dotnet workload install maui-ios
+          - dotnet workload install maui-tizen
+          - dotnet workload restore
+
+      - name: Восстановление зависимостей
+        script:
+          - dotnet restore YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj
+
+      - name: Сборка iOS проекта
+        script:
+          - dotnet build YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj --configuration Release
+
     artifacts:
       - build/ios/**/*.app
