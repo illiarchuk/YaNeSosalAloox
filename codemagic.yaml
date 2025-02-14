@@ -4,15 +4,20 @@ workflows:
     scripts:
       - name: Install .NET SDK
         script: |
+          # Устанавливаем зависимости для Ubuntu/Debian
           sudo apt-get update
-          sudo apt-get install -y wget
-          wget https://download.visualstudio.microsoft.com/download/pr/f169a458-6a72-416f-8e28-b9c25590b618/93b11063d4b53ee0513453d772157b3f/dotnet-sdk-8.0.100-linux-x64.tar.gz
-          mkdir -p $HOME/dotnet
-          tar zxf dotnet-sdk-8.0.100-linux-x64.tar.gz -C $HOME/dotnet
-          export PATH=$PATH:$HOME/dotnet
+          sudo apt-get install -y wget apt-transport-https software-properties-common
+          # Добавляем ключ для репозитория Microsoft
+          wget https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+          # Добавляем репозиторий Microsoft
+          sudo add-apt-repository https://packages.microsoft.com/ubuntu/20.04/prod
+          sudo apt-get update
+          # Устанавливаем .NET SDK
+          sudo apt-get install -y dotnet-sdk-8.0
 
       - name: Verify .NET SDK installation
         script: |
+          # Проверяем установку .NET SDK
           dotnet --version
 
       - name: Install .NET workloads
