@@ -1,18 +1,18 @@
 workflows:
   ios:
     name: iOS Build
-    instance_type: mac_mini_m1  # Используем Mac mini M1 для сборки
+    instance_type: mac_mini_m1
     max_build_duration: 60
     environment:
       vars:
-        DOTNET_VERSION: 8.0.100  # Укажи версию .NET SDK
+        DOTNET_VERSION: 8.0.100
     scripts:
       - name: Установка .NET
         script: |
           curl -fsSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --version $DOTNET_VERSION
       - name: Восстановление зависимостей
         script: dotnet restore YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj
-      - name: Ne Sosal Ya
+      - name: Сборка проекта
         script: dotnet build YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj --configuration Release
     artifacts:
       - build/ios/**/*.ipa
@@ -20,4 +20,5 @@ workflows:
       email:
         recipients:
           - "illiarchuk@gmail.com"  # Замени на свою почту
-        notify: SUCCESS
+        on_success: true  # Уведомлять при успешной сборке
+        on_failure: true  # Уведомлять при ошибке
