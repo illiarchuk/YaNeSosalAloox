@@ -1,7 +1,6 @@
 workflows:
   ios:
     name: iOS build
-    platform: ios
     scripts:
       # Шаг 1: Установка рабочих нагрузок .NET MAUI
       - echo "Installing .NET MAUI workloads..."
