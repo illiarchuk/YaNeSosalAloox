@@ -1,27 +1,23 @@
 workflows:
   ios:
-    name: iOS Build
-    instance_type: mac_mini_m1
-    max_build_duration: 60
-    environment:
-      vars:
-        DOTNET_VERSION: 8.0.100
-    scripts:
-      - name: Установка .NET SDK
-        script: |
-          curl -fsSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --version $DOTNET_VERSION
-          echo 'export DOTNET_ROOT=$HOME/.dotnet' >> $HOME/.bashrc
-          echo 'export PATH=$HOME/.dotnet:$HOME/.dotnet/tools:$PATH' >> $HOME/.bashrc
-          source $HOME/.bashrc
-      - name: Проверка версии .NET
-        script: $HOME/.dotnet/dotnet --version
-      - name: Восстановление зависимостей
-        script: $HOME/.dotnet/dotnet restore YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj
-      - name: Сборка проекта
-        script: $HOME/.dotnet/dotnet build YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj --configuration Release
+    name: iOS build
+    platform: ios
+    script:
+      # Шаг 1: Установка рабочих нагрузок .NET MAUI
+      - echo "Installing .NET MAUI workloads..."
+      - dotnet workload install maui-ios maui-tizen
+      # Шаг 2: Восстановление зависимостей
+      - echo "Restoring dependencies..."
+      - dotnet restore YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj
+      # Шаг 3: Сборка проекта
+      - echo "Building iOS project..."
+      - dotnet build YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj --configuration Release
+    # Шаг 4: Артефакты, которые нужно сохранить после сборки
     artifacts:
-      - build/ios/**/*.ipa
+      - build/ios/**/*.app
+    # Шаг 5: Публикация
     publishing:
       email:
-        recipients:
-          - "illiarchuk@gmail.com"  # Замени на свою почту
+        on_failure: true
+        on_success: true
+        to: 'illiarchuk@gmail.com'
