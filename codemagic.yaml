@@ -1,32 +1,14 @@
 workflows:
   ios-build:
     name: iOS build
-    environment:
-      vars:
-        # Add any necessary environment variables here, e.g.:
-        - key: DOTNET_VERSION
-          value: 8.0.100
-    steps:
-      - name: Checkout code
-        script:
-          - git clone https://github.com/illiarchuk/YaNeSosalAloox.git
-
-      - name: Install .NET workloads
-        script:
-          - echo "Installing .NET workloads..."
-          - dotnet workload install maui-ios
-          - dotnet workload install maui-tizen
-          - dotnet workload restore
-
-      - name: Restore dependencies
-        script:
-          - echo "Restoring dependencies..."
-          - dotnet restore YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj
-
-      - name: Build iOS project
-        script:
-          - echo "Building iOS project..."
-          - dotnet build YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj --configuration Release
-
+    script:
+      - echo "Installing .NET workloads..."
+      - dotnet workload install maui-ios
+      - dotnet workload install maui-tizen
+      - dotnet workload restore
+      - echo "Restoring dependencies..."
+      - dotnet restore YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj
+      - echo "Building iOS project..."
+      - dotnet build YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj --configuration Release
     artifacts:
       - build/ios/**/*.app
