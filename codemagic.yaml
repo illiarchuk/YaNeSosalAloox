@@ -1,0 +1,11 @@
+workflows:
+  ios:
+    name: iOS build
+    description: Build the iOS app using .NET MAUI
+    platform: ios
+    script:
+      - echo "Building iOS project..."
+      - dotnet restore YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj
+      - dotnet build YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj --configuration Release
+    artifacts:
+      - build/ios/**/*.app
