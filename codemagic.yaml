@@ -2,6 +2,10 @@ workflows:
   ios-build:
     name: iOS build
     scripts:
+      - name: Install .NET SDK
+        script: |
+          curl -sSL https://dotnet.microsoft.com/download/dotnet/thank-you/sdk-8.0.100-linux-x64-binaries | bash
+
       - name: Install .NET workloads
         script: |
           dotnet workload install maui-ios
