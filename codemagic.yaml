@@ -2,18 +2,15 @@ workflows:
   ios-build:
     name: iOS build
     scripts:
-      - name: Install .NET SDK
+      - name: Install .NET SDK (macOS)
         script: |
-          # Устанавливаем зависимости для Ubuntu/Debian
-          sudo apt-get update
-          sudo apt-get install -y wget apt-transport-https software-properties-common
-          # Добавляем ключ для репозитория Microsoft
-          wget https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-          # Добавляем репозиторий Microsoft
-          sudo add-apt-repository https://packages.microsoft.com/ubuntu/20.04/prod
-          sudo apt-get update
-          # Устанавливаем .NET SDK
-          sudo apt-get install -y dotnet-sdk-8.0
+          # Устанавливаем Homebrew, если он еще не установлен
+          if ! command -v brew &>/dev/null; then
+            echo "Homebrew not found. Installing Homebrew..."
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          fi
+          # Устанавливаем .NET SDK через Homebrew
+          brew install --cask dotnet-sdk
 
       - name: Verify .NET SDK installation
         script: |
