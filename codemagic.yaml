@@ -2,7 +2,7 @@ workflows:
   ios:
     name: iOS build
     platform: ios
-    script:
+    scripts:
       # Шаг 1: Установка рабочих нагрузок .NET MAUI
       - echo "Installing .NET MAUI workloads..."
       - dotnet workload restore
@@ -15,9 +15,7 @@ workflows:
     # Шаг 4: Артефакты, которые нужно сохранить после сборки
     artifacts:
       - build/ios/**/*.app
-    # Шаг 5: Публикация
     publishing:
       email:
-        on_failure: true
-        on_success: true
-        to: 'illiarchuk@gmail.com'
+        recipients: 
+          - 'illiarchuk@gmail.com'  # Здесь нужно указать правильные email-адреса
