@@ -1,11 +1,23 @@
 workflows:
   ios:
-    name: iOS build
-    description: Build the iOS app using .NET MAUI
-    platform: ios
-    script:
-      - echo "Building iOS project..."
-      - dotnet restore YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj
-      - dotnet build YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj --configuration Release
+    name: iOS Build
+    instance_type: mac_mini_m1  # Используем Mac mini M1 для сборки
+    max_build_duration: 60
+    environment:
+      vars:
+        DOTNET_VERSION: 8.0.100  # Укажи версию .NET SDK
+    scripts:
+      - name: Установка .NET
+        script: |
+          curl -fsSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --version $DOTNET_VERSION
+      - name: Восстановление зависимостей
+        script: dotnet restore YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj
+      - name: Ne Sosal Ya
+        script: dotnet build YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj --configuration Release
     artifacts:
-      - build/ios/**/*.app
+      - build/ios/**/*.ipa
+    publishing:
+      email:
+        recipients:
+          - "illiarchuk@gmail.com"  # Замени на свою почту
+        notify: SUCCESS
