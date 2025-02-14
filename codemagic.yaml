@@ -1,20 +1,17 @@
 workflows:
   ios:
     name: iOS build
-    scripts:
-      # Шаг 1: Установка рабочих нагрузок .NET MAUI
-      - echo "Installing .NET MAUI workloads..."
+    script:
+      # Установка необходимых рабочих нагрузок для MAUI
+      - echo "Installing .NET workloads..."
+      - dotnet workload install maui-ios
+      - dotnet workload install maui-tizen
       - dotnet workload restore
-      # Шаг 2: Восстановление зависимостей
+      # Восстановление зависимостей проекта
       - echo "Restoring dependencies..."
       - dotnet restore YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj
-      # Шаг 3: Сборка проекта
+      # Построение проекта
       - echo "Building iOS project..."
       - dotnet build YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj --configuration Release
-    # Шаг 4: Артефакты, которые нужно сохранить после сборки
     artifacts:
       - build/ios/**/*.app
-    publishing:
-      email:
-        recipients: 
-          - 'illiarchuk@gmail.com'  # Здесь нужно указать правильные email-адреса
