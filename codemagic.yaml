@@ -20,5 +20,3 @@ workflows:
       email:
         recipients:
           - "illiarchuk@gmail.com"  # Замени на свою почту
-        on_success: true  # Уведомлять при успешной сборке
-        on_failure: true  # Уведомлять при ошибке
