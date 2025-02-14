@@ -4,8 +4,12 @@ workflows:
     scripts:
       - name: Install .NET SDK
         script: |
-          curl -sSL https://aka.ms/install-dotnet-preview | bash
-          export PATH=$PATH:/root/.dotnet/tools
+          sudo apt-get update
+          sudo apt-get install -y wget
+          wget https://download.visualstudio.microsoft.com/download/pr/f169a458-6a72-416f-8e28-b9c25590b618/93b11063d4b53ee0513453d772157b3f/dotnet-sdk-8.0.100-linux-x64.tar.gz
+          mkdir -p $HOME/dotnet
+          tar zxf dotnet-sdk-8.0.100-linux-x64.tar.gz -C $HOME/dotnet
+          export PATH=$PATH:$HOME/dotnet
 
       - name: Verify .NET SDK installation
         script: |
