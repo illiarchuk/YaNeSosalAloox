@@ -5,7 +5,7 @@ workflows:
     script:
       # Шаг 1: Установка рабочих нагрузок .NET MAUI
       - echo "Installing .NET MAUI workloads..."
-      - dotnet workload install maui-ios maui-tizen
+      - dotnet workload restore
       # Шаг 2: Восстановление зависимостей
       - echo "Restoring dependencies..."
       - dotnet restore YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj
