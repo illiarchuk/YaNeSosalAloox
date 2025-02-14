@@ -4,7 +4,12 @@ workflows:
     scripts:
       - name: Install .NET SDK
         script: |
-          curl -sSL https://dotnet.microsoft.com/download/dotnet/thank-you/sdk-8.0.100-linux-x64-binaries | bash
+          curl -sSL https://aka.ms/install-dotnet-preview | bash
+          export PATH=$PATH:/root/.dotnet/tools
+
+      - name: Verify .NET SDK installation
+        script: |
+          dotnet --version
 
       - name: Install .NET workloads
         script: |
