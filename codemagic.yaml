@@ -10,13 +10,15 @@ workflows:
       - name: Установка .NET SDK
         script: |
           curl -fsSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --version $DOTNET_VERSION
-          export PATH=$HOME/.dotnet:$HOME/.dotnet/tools:$PATH
+          echo 'export DOTNET_ROOT=$HOME/.dotnet' >> $HOME/.bashrc
+          echo 'export PATH=$HOME/.dotnet:$HOME/.dotnet/tools:$PATH' >> $HOME/.bashrc
+          source $HOME/.bashrc
       - name: Проверка версии .NET
-        script: dotnet --version
+        script: $HOME/.dotnet/dotnet --version
       - name: Восстановление зависимостей
-        script: dotnet restore YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj
+        script: $HOME/.dotnet/dotnet restore YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj
       - name: Сборка проекта
-        script: dotnet build YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj --configuration Release
+        script: $HOME/.dotnet/dotnet build YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj --configuration Release
     artifacts:
       - build/ios/**/*.ipa
     publishing:
