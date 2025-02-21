@@ -32,4 +32,3 @@ workflows:
 
     artifacts:
       - build/ios/**/*.app
-ЫЫ
