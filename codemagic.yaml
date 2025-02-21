@@ -11,6 +11,7 @@ workflows:
           fi
           # Устанавливаем .NET SDK через Homebrew
           brew install --cask dotnet-sdk
+          export PATH="$HOME/.dotnet:$PATH"
 
       - name: Verify .NET SDK installation
         script: |
@@ -19,9 +20,9 @@ workflows:
 
       - name: Install .NET workloads
         script: |
-          dotnet workload install maui-ios
-          dotnet workload install maui-tizen
-          dotnet workload restore
+          sudo DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1 dotnet workload install maui-ios --disable-parallel
+          sudo DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1 dotnet workload install maui-tizen --disable-parallel
+          sudo DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1 dotnet workload restore
 
       - name: Restore dependencies
         script: dotnet restore YaNeSosalAloo.iOS/YaNeSosalAloo.iOS.csproj
@@ -31,3 +32,4 @@ workflows:
 
     artifacts:
       - build/ios/**/*.app
+ЫЫ
